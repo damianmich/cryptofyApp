@@ -4,8 +4,6 @@ const app = express();
 const publicPath = path.join(__dirname, "..", "build");
 const port = process.env.PORT || 3000;
 
-app.use(express.static(publicPath));
-
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Credentials", true);
@@ -26,7 +24,7 @@ app.configure(function () {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.static(path.join(application_root, "public")));
+  app.use(express.static(path.join(__dirname, "..", "build")));
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
