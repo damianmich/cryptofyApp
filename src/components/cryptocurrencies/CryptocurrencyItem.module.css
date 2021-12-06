@@ -1,0 +1,59 @@
+.name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  margin-bottom: 1rem;
+}
+
+.logo {
+  width: 3rem;
+  height: 3rem;
+}
+.favorite {
+  font-size: 4rem;
+}
+.favorite-true {
+  font-size: 4rem;
+  color: #1890ff;
+}
+
+.favorite:hover,
+.favorite-true {
+  color: #1890ff;
+  cursor: pointer;
+}
+
+.pagination {
+  font-size: 2rem;
+  padding: 3rem;
+  text-align: center;
+}
+.price {
+  font-weight: 600;
+}
+.price,
+.marketcap {
+  margin-bottom: 1rem;
+}
+
+.pct > span {
+  padding: 0.35rem;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 3px;
+  margin-left: 1rem;
+}
+
+.crypto-name {
+  display: flex;
+  align-items: center;
+}
+
+.crypto-name > a {
+  font-weight: 800;
+}
+
+.rank {
+  margin-right: 1rem;
+}

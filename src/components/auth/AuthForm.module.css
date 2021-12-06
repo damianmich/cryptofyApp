@@ -1,0 +1,15 @@
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-title {
+  color: #1890ff;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  font-weight: 800;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}

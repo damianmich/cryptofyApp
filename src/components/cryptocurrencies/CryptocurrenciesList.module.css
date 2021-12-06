@@ -1,0 +1,19 @@
+.searchInput {
+  max-width: 30%;
+}
+
+@media screen and (max-width: 800px) {
+  .searchInput {
+    max-width: 40%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .searchInput {
+    max-width: 100%;
+  }
+}
+
+.pagination {
+  text-align: center;
+}

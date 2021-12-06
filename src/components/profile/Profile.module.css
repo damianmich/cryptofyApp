@@ -1,0 +1,11 @@
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+}
+
+.empty > p {
+  font-size: 10rem;
+  margin-bottom: 0;
+}

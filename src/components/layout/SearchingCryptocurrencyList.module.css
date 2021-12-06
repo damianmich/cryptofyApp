@@ -1,0 +1,19 @@
+.item:hover {
+  background-color: rgb(224, 224, 224);
+}
+
+.listSearch {
+  max-width: 30%;
+}
+
+@media screen and (max-width: 800px) {
+  .listSearch {
+    max-width: 40%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .listSearch {
+    max-width: 100%;
+  }
+}
