@@ -1,21 +1,27 @@
 import "./App.css";
 import LayoutMain from "./components/layout/Layout";
-import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
-import NotFound from "./pages/NotFound";
-import Home from "./pages/Home";
+import { Route, Routes, Navigate } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
-import CryptocurrenciesPage from "./pages/CryptocurrenciesPage";
 import { useDispatch, useSelector } from "react-redux";
-import store, { AppDispatch, RootState } from "./store";
-import { Fragment, useEffect, useState } from "react";
+import { RootState } from "./store";
+import { Fragment, Suspense, useEffect } from "react";
 import {
   fetchCryptocurrenciesData,
   fetchGlobalStats,
-  getUserData,
 } from "./store/cryptocurrencies-actions";
-import ProfilePage from "./pages/ProfilePage";
-import CryptocurrencyDetailPage from "./pages/CryptocurrencyDetailPage";
 import { authActions } from "./store/auth-slice";
+import React from "react";
+import LoadingSpinner from "./components/UI/LoadingSpinner";
+
+const CryptocurrenciesPage = React.lazy(
+  () => import("./pages/CryptocurrenciesPage")
+);
+const ProfilePage = React.lazy(() => import("./pages/ProfilePage"));
+const CryptocurrencyDetailPage = React.lazy(
+  () => import("./pages/CryptocurrencyDetailPage")
+);
+const NotFound = React.lazy(() => import("./pages/NotFound"));
+const Home = React.lazy(() => import("./pages/Home"));
 
 function App() {
   const dispatch = useDispatch();
@@ -34,53 +40,59 @@ function App() {
 
   return (
     <LayoutMain>
-      <Routes>
-        <Fragment>
-          <Route
-            path="/"
-            element={
-              isLogin ? <Navigate replace to="/cryptocurrencies/1" /> : <Home />
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              isLogin ? (
-                <Navigate replace to="/cryptocurrencies/1" />
-              ) : (
-                <AuthPage />
-              )
-            }
-          />
-          <Route
-            path={"/cryptocurrencies/:page"}
-            element={
-              isLogin ? (
-                <CryptocurrenciesPage />
-              ) : (
-                <Navigate replace to="/login" />
-              )
-            }
-          />
-          <Route
-            path={"/cryptocurrencies/detail/:cryptocurrencyId"}
-            element={
-              isLogin ? (
-                <CryptocurrencyDetailPage />
-              ) : (
-                <Navigate replace to="/login" />
-              )
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              isLogin ? <ProfilePage /> : <Navigate replace to="/login" />
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-        </Fragment>
-      </Routes>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Routes>
+          <Fragment>
+            <Route
+              path="/"
+              element={
+                isLogin ? (
+                  <Navigate replace to="/cryptocurrencies/1" />
+                ) : (
+                  <Home />
+                )
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                isLogin ? (
+                  <Navigate replace to="/cryptocurrencies/1" />
+                ) : (
+                  <AuthPage />
+                )
+              }
+            />
+            <Route
+              path={"/cryptocurrencies/:page"}
+              element={
+                isLogin ? (
+                  <CryptocurrenciesPage />
+                ) : (
+                  <Navigate replace to="/login" />
+                )
+              }
+            />
+            <Route
+              path={"/cryptocurrencies/detail/:cryptocurrencyId"}
+              element={
+                isLogin ? (
+                  <CryptocurrencyDetailPage />
+                ) : (
+                  <Navigate replace to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                isLogin ? <ProfilePage /> : <Navigate replace to="/login" />
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Fragment>
+        </Routes>
+      </Suspense>
     </LayoutMain>
   );
 }

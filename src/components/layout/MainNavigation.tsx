@@ -37,7 +37,7 @@ const MainNavigation = React.memo(() => {
 
   return (
     <Sider breakpoint="lg" collapsedWidth="0">
-      <div className={classes.logo}>REACTApp</div>
+      <div className={classes.logo}>CryptofyApp</div>
       <Menu
         theme="dark"
         mode="inline"
