@@ -1,3 +1,5 @@
+Application written 100% only by me.
+
 # LIVE
 
 https://appcryptofy.web.app
