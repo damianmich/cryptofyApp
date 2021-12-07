@@ -83,12 +83,12 @@ const CryptocurrencyDetail = React.memo(() => {
               </div>
               <div className={classes["item-container"]}>
                 <img
+                  src={singleItem.logo_url}
                   style={{
                     marginLeft: "1rem",
                     width: "5rem",
                     height: "5rem",
                   }}
-                  src={singleItem.logo_url}
                 />
                 <span
                   style={{
@@ -123,21 +123,12 @@ const CryptocurrencyDetail = React.memo(() => {
                 : { color: "red" }
             }
           >
-            {pctNumber(singleItem.price_change_pct)}%
+            {singleItem.price_change_pct}%
           </Descriptions.Item>
           <Descriptions.Item label="24h volume">
             {currencyNumber(+singleItem.volume)}
           </Descriptions.Item>
-          <Descriptions.Item
-            label="24h volume change"
-            contentStyle={
-              +pctNumber(singleItem.volume_change_pct) > 0
-                ? { color: "green" }
-                : { color: "red" }
-            }
-          >
-            {+pctNumber(singleItem.volume_change_pct)}
-          </Descriptions.Item>
+
           <Descriptions.Item label="Marketcap">
             {currencyNumber(+singleItem.marketcap)}
           </Descriptions.Item>

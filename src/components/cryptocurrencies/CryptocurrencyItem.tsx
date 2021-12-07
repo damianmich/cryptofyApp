@@ -66,7 +66,7 @@ export const CryptocurrencyItem: React.FC<{
                 : { backgroundColor: "red" }
             }
           >
-            {pctNumber(props.item.price_change_pct)}
+            {props.item.price_change_pct}%
           </span>
         </div>
       </div>

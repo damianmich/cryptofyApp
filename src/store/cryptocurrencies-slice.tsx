@@ -81,7 +81,12 @@ const cryptocurrenciesSlice = createSlice({
       );
     },
     updateFavorites(state, action) {
-      state.favorites = action.payload.items;
+      console.log(action.payload.items);
+
+      const index = state.favorites.findIndex(
+        (crypto) => crypto.name === action.payload.items.name
+      );
+      state.favorites[index] = action.payload.items;
     },
     resetState(state) {
       state.favorites = [];

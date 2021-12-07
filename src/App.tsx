@@ -30,7 +30,7 @@ function App() {
   let isLogin = useSelector((state: RootState) => state.auth.isLogged);
 
   const search = async () => {
-    await dispatch(fetchCryptocurrenciesData("SEARCH", ""));
+    await dispatch(fetchCryptocurrenciesData("SEARCH"));
   };
 
   useEffect(() => {

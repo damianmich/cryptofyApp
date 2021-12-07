@@ -26,16 +26,12 @@ const Profile = React.memo(() => {
     if (store.getState().cryptocurrencies.favorites.length === 0)
       await dispatch(getUserData());
 
-    dispatch(
-      fetchCryptocurrenciesData(
-        "FAVORITES",
-        "",
-        store
-          .getState()
-          .cryptocurrencies.favorites.map((item) => item.id)
-          .join(",")
-      )
-    );
+    store.getState().cryptocurrencies.favorites.map((item) => {
+      console.log("item");
+
+      dispatch(fetchCryptocurrenciesData("FAVORITES", "", item.id));
+    });
+
     setFavoritesListLoaded(
       (prevState) =>
         (prevState = store

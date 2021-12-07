@@ -13,7 +13,7 @@ import {
 const CryptocurrencyDetailPage = React.memo(() => {
   const { cryptocurrencyId } = useParams<string>();
   const dispatch = useDispatch<AppDispatch>();
-  const { isLoading, singleItem } = useSelector(
+  const { isLoading } = useSelector(
     (state: RootState) => state.cryptocurrencies
   );
 

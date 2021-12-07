@@ -9,14 +9,40 @@ export const fetchCryptocurrenciesData = (
 ) => {
   return async (dispatch: AppDispatch) => {
     dispatch(cryptocurrenciesActions.loadingSpinner({ isLoading: true }));
+    let http = "";
+    let nextPage = page === "1" ? 0 : +page * 10 - 10;
+    console.log(withData);
+
+    if (withData === "ALL") {
+      http = `https://api.coinstats.app/public/v1/coins?skip=${nextPage}&limit=10&currency=USD`;
+    } else if (withData === "SEARCH") {
+      http = `https://api.coinstats.app/public/v1/coins?skip=0&limit=500&currency=USD`;
+    } else {
+      http = `https://api.coinstats.app/public/v1/coins/${cryptocurrencyId}?currency=USD`;
+    }
+
+    // http =
+    //   withData === "ALL"
+    //     ? `https://api.coinstats.app/public/v1/coins?skip=${nextPage}&limit=10&currency=USD`
+    //     : http;
+    // http =
+    //   withData === "SEARCH"
+    //     ? `https://api.coinstats.app/public/v1/coins?skip=0&limit=500&currency=USD`
+    //     : http;
+    // http =
+    //   withData === "SINGLE" || "FAVORITES"
+    //     ? `https://api.coinstats.app/public/v1/coins/${cryptocurrencyId}?currency=USD`
+    //     : http;
+    console.log(http);
 
     const fetchData = async () => {
       const response = await fetch(
-        `https://api.nomics.com/v1/currencies/ticker?key=cc97b5f2fbf3456675c688a53c90a64792cf2e9a${
-          cryptocurrencyId && `&ids=${cryptocurrencyId}`
-        }&interval=1d&convert=USD&status=active${
-          page && `&per-page=10&page=${page}`
-        }`
+        // `https://api.nomics.com/v1/currencies/ticker?key=cc97b5f2fbf3456675c688a53c90a64792cf2e9a${
+        //   cryptocurrencyId && `&ids=${cryptocurrencyId}`
+        // }&interval=1d&convert=USD&status=active${
+        //   page && `&per-page=10&page=${page}`
+        // }`
+        http
       );
 
       dispatch(cryptocurrenciesActions.loadingSpinner({ isLoading: false }));
@@ -31,36 +57,49 @@ export const fetchCryptocurrenciesData = (
 
     try {
       const cryptoFetchData = await fetchData();
+      console.log(cryptoFetchData);
 
-      const cryptocurrenciesData: CryptoItem[] =
-        withData === "SEARCH"
-          ? cryptoFetchData.slice(0, 1000).map((item: any) => ({
-              id: item.id,
-              name: item.name,
-            }))
-          : cryptoFetchData.map((item: any) => ({
-              id: item.id,
-              rank: item.rank,
-              name: item.name,
-              price: item.price,
-              logo_url: item.logo_url,
-              symbol: item.symbol,
-              marketcap: item.market_cap,
-              volume: item["1d"].volume,
-              price_change_pct: item["1d"].price_change_pct,
-              volume_change_pct: item["1d"].volume_change_pct,
-            }));
+      const cryptocurrenciesDataSearch: CryptoItem[] =
+        withData === "SEARCH" &&
+        cryptoFetchData.coins.map((item: any) => ({
+          id: item.id,
+          name: item.name,
+        }));
+      const cryptocurrenciesDataAll =
+        withData === "ALL" &&
+        cryptoFetchData.coins.map((item: any) => ({
+          id: item.id,
+          rank: item.rank,
+          name: item.name,
+          price: item.price,
+          logo_url: item.icon,
+          symbol: item.symbol,
+          marketcap: item.marketCap,
+          volume: item.volume,
+          price_change_pct: item.priceChange1d,
+          volume_change_pct: item.priceChange1d,
+        }));
 
       if (withData === "ALL") {
-     
         dispatch(
           cryptocurrenciesActions.loadCryptocurrencies({
-            items: cryptocurrenciesData,
+            items: cryptocurrenciesDataAll,
           })
         );
       }
       if (withData === "SINGLE") {
-        const singleItem = Object.assign({}, ...cryptocurrenciesData);
+        const singleItem = {
+          id: cryptoFetchData.coin.id,
+          rank: cryptoFetchData.coin.rank,
+          name: cryptoFetchData.coin.name,
+          price: cryptoFetchData.coin.price,
+          logo_url: cryptoFetchData.coin.icon,
+          symbol: cryptoFetchData.coin.symbol,
+          marketcap: cryptoFetchData.coin.marketCap,
+          volume: cryptoFetchData.coin.volume,
+          price_change_pct: cryptoFetchData.coin.priceChange1d,
+          volume_change_pct: cryptoFetchData.coin.priceChange1d,
+        };
 
         dispatch(
           cryptocurrenciesActions.loadSingleCryptocurrency({
@@ -69,16 +108,28 @@ export const fetchCryptocurrenciesData = (
         );
       }
       if (withData === "FAVORITES") {
+        const favorite = {
+          id: cryptoFetchData.coin.id,
+          rank: cryptoFetchData.coin.rank,
+          name: cryptoFetchData.coin.name,
+          price: cryptoFetchData.coin.price,
+          logo_url: cryptoFetchData.coin.icon,
+          symbol: cryptoFetchData.coin.symbol,
+          marketcap: cryptoFetchData.coin.marketCap,
+          volume: cryptoFetchData.coin.volume,
+          price_change_pct: cryptoFetchData.coin.priceChange1d,
+          volume_change_pct: cryptoFetchData.coin.priceChange1d,
+        };
         dispatch(
           cryptocurrenciesActions.updateFavorites({
-            items: cryptocurrenciesData,
+            items: favorite,
           })
         );
       }
       if (withData === "SEARCH") {
         await dispatch(
           cryptocurrenciesActions.loadSearchCryptocurrencies({
-            searchedItems: cryptocurrenciesData,
+            searchedItems: cryptocurrenciesDataSearch,
           })
         );
       }
@@ -155,7 +206,6 @@ export const fetchChartData = (id: string) => {
   return async (dispatch: AppDispatch) => {
     const chartData = async () => {
       const symbol = store.getState().cryptocurrencies.singleItem.symbol;
-     
 
       const response = await fetch(
         `https://coinranking1.p.rapidapi.com/coins?symbols=${symbol}`,
@@ -196,7 +246,6 @@ export const fetchChartData = (id: string) => {
         return data;
       };
       try {
-
         const responseChartById = await fetchChartById(
           responseChartSymbol.data.coins["0"].id
         );
