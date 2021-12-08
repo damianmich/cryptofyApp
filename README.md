@@ -9,7 +9,7 @@
 
 ## Project Overview 🎉
 
-Application written 100% only by me. Cryptocurrency app. You can check prices, coins, and information about cryptocurrencies. It has the ability to log in and create a user account. Accounts are authenticated and stored using Firebase. Logged in user can add cryptocurrencies to favorites. Logged in user data are stored in the Firebase database. The user will not be logged out after reloading the page. The user token is stored in localstorage. 
+Application written `100% only by me`. Cryptocurrency app. You can check prices, coins, and information about cryptocurrencies. It has the ability to log in and create a user account. Accounts are authenticated and stored using `Firebase`. Logged in user can add cryptocurrencies to favorites. Logged in user data are stored in the Firebase database. The user will not be logged out after reloading the page. The user token is stored in localstorage. I used the `Ant Design` libraries for styling
 
 ## Live 📍
 
