@@ -11,8 +11,9 @@ import {
   SlidersOutlined,
   UserOutlined,
   ProfileOutlined,
+  FundOutlined,
 } from "@ant-design/icons";
-import React from "react";
+import React, { useState } from "react";
 
 const MainNavigation = React.memo(() => {
   const { Sider } = Layout;
@@ -38,6 +39,7 @@ const MainNavigation = React.memo(() => {
   return (
     <Sider breakpoint="lg" collapsedWidth="0">
       <div className={classes.logo}>CryptofyApp</div>
+
       <Menu
         theme="dark"
         mode="inline"
@@ -56,6 +58,11 @@ const MainNavigation = React.memo(() => {
         {isLogin && (
           <Menu.Item key="/profile" icon={<ProfileOutlined />}>
             <NavLink to={"/profile"}>Profile</NavLink>
+          </Menu.Item>
+        )}
+        {isLogin && (
+          <Menu.Item key="/news" icon={<FundOutlined />}>
+            <NavLink to={"/news"}>News</NavLink>
           </Menu.Item>
         )}
         {isLogin && (

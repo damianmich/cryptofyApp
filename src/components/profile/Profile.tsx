@@ -27,8 +27,6 @@ const Profile = React.memo(() => {
       await dispatch(getUserData());
 
     store.getState().cryptocurrencies.favorites.map((item) => {
-      console.log("item");
-
       dispatch(fetchCryptocurrenciesData("FAVORITES", "", item.id));
     });
 

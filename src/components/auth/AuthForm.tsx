@@ -1,7 +1,7 @@
 import "antd/dist/antd.css";
 import classes from "./AuthForm.module.css";
 import { useNavigate } from "react-router-dom";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import { useDispatch } from "react-redux";
 import { useCallback, useState } from "react";
 import { AppDispatch } from "../../store";
@@ -19,6 +19,7 @@ const AuthForm = React.memo(() => {
     await dispatch(
       userAuthentication(signInsignUp, value.email, value.password)
     );
+
     navigate("/cryptocurrencies/1");
 
     value.email = " ";
@@ -79,10 +80,6 @@ const AuthForm = React.memo(() => {
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
-
-          <a className="login-form-forgot" href="">
-            Forgot password
-          </a>
         </Form.Item>
 
         <Form.Item>

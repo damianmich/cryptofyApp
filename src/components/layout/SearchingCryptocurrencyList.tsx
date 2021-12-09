@@ -1,5 +1,5 @@
 import { List } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -15,10 +15,17 @@ const SearchingCryptocurrencyList: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const cryptoSearching = store
-    .getState()
-    .cryptocurrencies.searchedItems.map((i) => ({ id: i.id, name: i.name }))
-    .filter((i) => i.name.toLowerCase().includes(searchingText));
+  const [cryptoSearching, setCryptoSearching] = useState<
+    { id: string; name: string }[]
+  >([{ id: "", name: "" }]);
+
+  useEffect(() => {
+    const searching = store
+      .getState()
+      .cryptocurrencies.searchedItems.map((i) => ({ id: i.id, name: i.name }))
+      .filter((i) => i.name.toLowerCase().includes(searchingText));
+    setCryptoSearching(searching);
+  }, [searchingText]);
 
   const onDetailHandler = (item: { id: string; name: string }) => {
     navigate(`/cryptocurrencies/detail/${item.id}`);

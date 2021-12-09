@@ -12,6 +12,7 @@ import {
 import { authActions } from "./store/auth-slice";
 import React from "react";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
+import NewsPage from "./pages/NewsPage";
 
 const CryptocurrenciesPage = React.lazy(
   () => import("./pages/CryptocurrenciesPage")
@@ -87,6 +88,12 @@ function App() {
               path="/profile"
               element={
                 isLogin ? <ProfilePage /> : <Navigate replace to="/login" />
+              }
+            />
+            <Route
+              path="/news"
+              element={
+                isLogin ? <NewsPage /> : <Navigate replace to="/login" />
               }
             />
             <Route path="*" element={<NotFound />} />

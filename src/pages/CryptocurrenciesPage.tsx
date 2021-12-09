@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import Cryptocurrencies from "../components/cryptocurrencies/Cryptocurrencies";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
-import store, { AppDispatch, RootState } from "../store";
+import { AppDispatch, RootState } from "../store";
 import {
   fetchCryptocurrenciesData,
   getUserData,

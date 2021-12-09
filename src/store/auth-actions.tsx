@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { AppDispatch } from ".";
 import { authActions } from "./auth-slice";
 
@@ -30,21 +31,24 @@ export const userAuthentication = (
         let errorMessage = "Authentication is field!";
         if (data && data.error && data.error.message) {
           errorMessage = data.error.message;
+          message.error(errorMessage);
           throw new Error(errorMessage);
         }
       }
+
       return data;
     };
     try {
       const authData = await fetchData();
+      message.success(signInsignUp ? "Login successful" : "Sign up successful");
       dispatch(
         authActions.login({
           idToken: authData.idToken,
           localId: authData.localId,
         })
       );
-    } catch (error) {
-      alert(error);
+    } catch (error: any) {
+      // alert(error);
     }
   };
 };

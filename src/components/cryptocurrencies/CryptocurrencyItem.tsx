@@ -11,6 +11,8 @@ import {
   pctNumber,
 } from "../helpers/Helpers";
 import classes from "./CryptocurrencyItem.module.css";
+import { StarOutlined } from "@ant-design/icons";
+import { message } from "antd";
 
 export const CryptocurrencyItem: React.FC<{
   item: CryptoItem;
@@ -19,12 +21,15 @@ export const CryptocurrencyItem: React.FC<{
 
   const addToFavoriteHandler = () => {
     if (props.item.isFavorite) {
+      message.success("Removed from favorite's");
       dispatch(
         cryptocurrenciesActions.removeFromFavorite({ item: props.item })
       );
     }
-    if (!props.item.isFavorite)
+    if (!props.item.isFavorite) {
+      message.success("Added to the favorite's");
       dispatch(cryptocurrenciesActions.addToFavorties({ item: props.item }));
+    }
     dispatch(menageUserData());
   };
 
@@ -37,16 +42,13 @@ export const CryptocurrencyItem: React.FC<{
             <Link to={`/cryptocurrencies/detail/${props.item.id}`}>
               {props.item.name}
             </Link>
-            <div
-              className={
-                props.item.isFavorite
-                  ? classes["favorite-true"]
-                  : classes.favorite
-              }
-              onClick={addToFavoriteHandler}
-            >
-              ⭐
-            </div>
+            <p onClick={addToFavoriteHandler} className={classes.star}>
+              <StarOutlined
+                style={{
+                  color: `${props.item.isFavorite ? "#ff0000" : "black"}`,
+                }}
+              />
+            </p>
           </div>
 
           <img className={classes.logo} src={props.item.logo_url} />

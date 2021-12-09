@@ -13,16 +13,6 @@
 .favorite {
   font-size: 4rem;
 }
-.favorite-true {
-  font-size: 4rem;
-  color: #1890ff;
-}
-
-.favorite:hover,
-.favorite-true {
-  color: #1890ff;
-  cursor: pointer;
-}
 
 .pagination {
   font-size: 2rem;
@@ -56,4 +46,11 @@
 
 .rank {
   margin-right: 1rem;
+}
+
+.star {
+  font-size: 2rem;
+  margin-bottom: 0;
+  margin-left: 1rem;
+  cursor: pointer;
 }

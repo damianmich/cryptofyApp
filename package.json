@@ -26,12 +26,11 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "server": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start": "node server/server.js",
-    "heroku-postbuild": "npm run build"
+    "eject": "react-scripts eject"
+
   },
   "eslintConfig": {
     "extends": [

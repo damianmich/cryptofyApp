@@ -11,6 +11,7 @@ const initialState = {
   favorites: [] as CryptoItem[],
   searchedItems: [] as CryptoItem[],
   globalStatsData: {} as any,
+  newsData: [] as any,
 };
 
 const cryptocurrenciesSlice = createSlice({
@@ -81,8 +82,6 @@ const cryptocurrenciesSlice = createSlice({
       );
     },
     updateFavorites(state, action) {
-      console.log(action.payload.items);
-
       const index = state.favorites.findIndex(
         (crypto) => crypto.name === action.payload.items.name
       );
@@ -97,6 +96,9 @@ const cryptocurrenciesSlice = createSlice({
     },
     loadGlobalStatsData(state, action) {
       state.globalStatsData = action.payload.globalStatsData;
+    },
+    loadNewsData(state, action) {
+      state.newsData = action.payload.newsData;
     },
   },
 });
