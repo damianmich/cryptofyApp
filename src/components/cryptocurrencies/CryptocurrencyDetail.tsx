@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { connect, ConnectedProps, useDispatch, useSelector } from "react-redux";
 import store, { RootState } from "../../store";
 import { Line, LineConfig } from "@ant-design/charts";
 import { Descriptions, message, Select } from "antd";
@@ -35,12 +35,13 @@ const CryptocurrencyDetail = () => {
       await dispatch(
         fetchChart("24h", store.getState().cryptocurrencies.singleItem.id)
       );
+      setChart(store.getState().cryptocurrencies.chartSingleItem);
     })();
   }, []);
 
   const scale = Math.min(
     ...chartSingleItem.map(
-      (item: { scales: any }) => +item.scales - +item.scales * 0.1
+      (item: { price: any }) => +item.price - +item.price * 0.1
     )
   );
 
@@ -60,6 +61,7 @@ const CryptocurrencyDetail = () => {
 
   const handleChange = async (value: string) => {
     await dispatch(fetchChart(value, singleItem.id));
+    setChart(store.getState().cryptocurrencies.chartSingleItem);
     setTimeChange(value);
   };
 
@@ -69,7 +71,7 @@ const CryptocurrencyDetail = () => {
     padding: "auto",
     autoFit: true,
     xField: "Date",
-    yField: "scales",
+    yField: "price",
     yAxis: {
       minLimit: +scale.toFixed(2),
       label: {
@@ -83,14 +85,12 @@ const CryptocurrencyDetail = () => {
     smooth: true,
   } as LineConfig;
 
-  useEffect(() => {
-    const onePct = chartSingleItem[chartSingleItem.length - 1].scales / 100;
-    const priceDifference =
-      chartSingleItem[chartSingleItem.length - 1].scales -
-      chartSingleItem[0].scales;
+  const setChart = (chart: any) => {
+    const onePct = chart[chart.length - 1].price / 100;
+    const priceDifference = chart[chart.length - 1].price - chart[0].price;
     const change = priceDifference / onePct;
     setSign(+change.toFixed(2));
-  }, [chartSingleItem]);
+  };
 
   return (
     <Fragment>

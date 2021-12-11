@@ -5,7 +5,11 @@ import { useParams } from "react-router-dom";
 import CryptocurrencyDetail from "../components/cryptocurrencies/CryptocurrencyDetail";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import store, { AppDispatch, RootState } from "../store";
-import { fetchCryptocurrenciesData } from "../store/cryptocurrencies-actions";
+import {
+  fetchChart,
+  fetchCryptocurrenciesData,
+} from "../store/cryptocurrencies-actions";
+import { cryptocurrenciesActions } from "../store/cryptocurrencies-slice";
 
 const CryptocurrencyDetailPage = React.memo(() => {
   const { cryptocurrencyId } = useParams<string>();
@@ -16,11 +20,15 @@ const CryptocurrencyDetailPage = React.memo(() => {
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchCryptocurrenciesData("SINGLE", "", cryptocurrencyId));
+      await dispatch(fetchCryptocurrenciesData("SINGLE", "", cryptocurrencyId));
     })();
   }, [dispatch, cryptocurrencyId]);
 
-  return <CryptocurrencyDetail />;
+  if (isLoading) {
+    return <LoadingSpinner />;
+  } else {
+    return <CryptocurrencyDetail />;
+  }
 });
 
 export default CryptocurrencyDetailPage;

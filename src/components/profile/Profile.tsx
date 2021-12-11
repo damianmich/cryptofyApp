@@ -9,14 +9,14 @@ import {
   getUserData,
 } from "../../store/cryptocurrencies-actions";
 import CryptocurrencyItem from "../cryptocurrencies/CryptocurrencyItem";
+import LoadingSpinner from "../UI/LoadingSpinner";
 import classes from "./Profile.module.css";
 
 const Profile = React.memo(() => {
   const dispatch = useDispatch();
-  const favoritesList = useSelector(
-    (state: RootState) => state.cryptocurrencies.favorites
+  const isLoading = useSelector(
+    (store: RootState) => store.cryptocurrencies.isLoading
   );
-
   const [favoritesListLoaded, setFavoritesListLoaded] =
     useState<JSX.Element[]>();
 
@@ -54,49 +54,53 @@ const Profile = React.memo(() => {
     render();
   }, []);
 
-  return (
-    <div className={classes.container}>
-      {favoritesListRender.length > 0 ? (
-        <div>
-          <Header
-            className="site-layout-sub-header-background"
-            style={{
-              paddingLeft: "5rem",
-              backgroundColor: "",
-              marginBottom: "1rem",
-              color: "white",
-              textAlign: "center",
-              fontSize: "2.5rem",
-              letterSpacing: "0.25rem",
-            }}
-          >
-            Your favorite cryptocurrencies list
-          </Header>
-          <List
-            grid={{
-              gutter: 16,
-              xs: 1,
-              sm: 2,
-              md: 3,
-              lg: 3,
-              xl: 4,
-              xxl: 4,
-            }}
-            dataSource={favoritesListRender}
-            renderItem={(item) => (
-              <List.Item>
-                <Card>{item}</Card>
-              </List.Item>
-            )}
-          />
-        </div>
-      ) : (
-        <div className={classes.empty}>
-          Your favorite list is empty. You can add with <p>⭐</p>
-        </div>
-      )}
-    </div>
-  );
+  if (isLoading) {
+    return <LoadingSpinner />;
+  } else {
+    return (
+      <div className={classes.container}>
+        {favoritesListRender.length > 0 ? (
+          <div>
+            <Header
+              className="site-layout-sub-header-background"
+              style={{
+                paddingLeft: "5rem",
+                backgroundColor: "",
+                marginBottom: "1rem",
+                color: "white",
+                textAlign: "center",
+                fontSize: "2.5rem",
+                letterSpacing: "0.25rem",
+              }}
+            >
+              Your favorite cryptocurrencies list
+            </Header>
+            <List
+              grid={{
+                gutter: 16,
+                xs: 1,
+                sm: 2,
+                md: 3,
+                lg: 3,
+                xl: 4,
+                xxl: 4,
+              }}
+              dataSource={favoritesListRender}
+              renderItem={(item) => (
+                <List.Item>
+                  <Card>{item}</Card>
+                </List.Item>
+              )}
+            />
+          </div>
+        ) : (
+          <div className={classes.empty}>
+            Your favorite list is empty. You can add with <p>⭐</p>
+          </div>
+        )}
+      </div>
+    );
+  }
 });
 
 export default Profile;

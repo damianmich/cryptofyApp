@@ -16,6 +16,7 @@ import {
 import React, { useState } from "react";
 
 const MainNavigation = React.memo(() => {
+  const [collapsed, setCollapsed] = useState(false);
   const { Sider } = Layout;
   const isLogin = useSelector((state: RootState) => state.auth.isLogged);
   const dispatch = useDispatch();
@@ -37,7 +38,14 @@ const MainNavigation = React.memo(() => {
   };
 
   return (
-    <Sider breakpoint="lg" collapsedWidth="0">
+    <Sider
+      breakpoint="lg"
+      collapsedWidth="0"
+      onClick={() => {
+        setCollapsed(!collapsed);
+      }}
+      collapsed={collapsed}
+    >
       <div className={classes.logo}>CryptofyApp</div>
 
       <Menu

@@ -23,7 +23,9 @@ const SearchingCryptocurrencyList: React.FC = () => {
     const searching = store
       .getState()
       .cryptocurrencies.searchedItems.map((i) => ({ id: i.id, name: i.name }))
-      .filter((i) => i.name.toLowerCase().includes(searchingText));
+      .filter((i) =>
+        i.name.toLowerCase().includes(searchingText.toLowerCase())
+      );
     setCryptoSearching(searching);
   }, [searchingText]);
 

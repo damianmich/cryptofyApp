@@ -146,6 +146,7 @@ export const getUserData = () => {
       );
 
       const data = await response.json();
+      dispatch(cryptocurrenciesActions.loadingSpinner({ isLoading: false }));
       if (!response.ok) {
         throw new Error(data.message || "Couldn't not send data!");
       }
@@ -223,7 +224,7 @@ export const fetchChart = (period: string, id: string) => {
 
               return {
                 Date: new Date(+data).toLocaleString(),
-                scales: +(+item[1]).toFixed(2),
+                price: +(+item[1]).toFixed(2),
               };
             }
           ),
@@ -237,6 +238,7 @@ export const fetchChart = (period: string, id: string) => {
 
 export const fetchNewsData = () => {
   return async (dispatch: AppDispatch) => {
+    dispatch(cryptocurrenciesActions.loadingSpinner({ isLoading: true }));
     const news = async () => {
       const response = await fetch(
         `https://api.coinstats.app/public/v1/news/trending?skip=0&limit=10`
@@ -249,7 +251,7 @@ export const fetchNewsData = () => {
     };
     try {
       const responseNews = await news();
-
+      dispatch(cryptocurrenciesActions.loadingSpinner({ isLoading: false }));
       const newsData = responseNews.news.map(
         (item: {
           title: string;
