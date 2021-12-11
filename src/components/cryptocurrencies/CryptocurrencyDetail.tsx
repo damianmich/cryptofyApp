@@ -1,5 +1,5 @@
-import { Fragment, useCallback, useEffect, useState } from "react";
-import { connect, ConnectedProps, useDispatch, useSelector } from "react-redux";
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import store, { RootState } from "../../store";
 import { Line, LineConfig } from "@ant-design/charts";
 import { Descriptions, message, Select } from "antd";
@@ -10,8 +10,7 @@ import {
   menageUserData,
 } from "../../store/cryptocurrencies-actions";
 import classes from "./CryptocurrencyDetail.module.css";
-import { currencyNumber, pctNumber } from "../helpers/Helpers";
-import React from "react";
+import { currencyNumber } from "../helpers/Helpers";
 import StarOutlined from "@ant-design/icons/lib/icons/StarOutlined";
 
 const CryptocurrencyDetail = () => {

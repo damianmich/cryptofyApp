@@ -16,7 +16,7 @@ import {
 import React, { useState } from "react";
 
 const MainNavigation = React.memo(() => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const { Sider } = Layout;
   const isLogin = useSelector((state: RootState) => state.auth.isLogged);
   const dispatch = useDispatch();
@@ -36,15 +36,34 @@ const MainNavigation = React.memo(() => {
       })
     );
   };
+  console.log(document.body.clientHeight);
+
+  let mobile = {};
+
+  if (window.innerWidth < 992 && !collapsed) {
+    mobile = {
+      position: "fixed",
+      zIndex: 10,
+      height: "100vh",
+    };
+  } else if (window.innerWidth < 992 && collapsed) {
+    mobile = {
+      position: "fixed",
+      height: document.body.clientHeight.toString(),
+      zIndex: 0,
+      transition: "0.25s ease",
+    };
+  }
 
   return (
     <Sider
       breakpoint="lg"
       collapsedWidth="0"
-      onClick={() => {
+      onClick={(e) => {
         setCollapsed(!collapsed);
       }}
-      collapsed={collapsed}
+      collapsed={window.innerWidth < 992 ? collapsed : false}
+      style={mobile}
     >
       <div className={classes.logo}>CryptofyApp</div>
 
@@ -52,6 +71,8 @@ const MainNavigation = React.memo(() => {
         theme="dark"
         mode="inline"
         defaultSelectedKeys={[window.location.pathname]}
+        onClick={(e) => {}}
+        style={collapsed && window.innerWidth < 992 ? { display: "none" } : {}}
       >
         {isLogin && (
           <Menu.Item key="/cryptocurrencies/1" icon={<SlidersOutlined />}>

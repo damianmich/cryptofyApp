@@ -23,7 +23,7 @@ const CryptocurrenciesList = React.memo(() => {
     globalStatsData,
   } = useSelector((state: RootState) => state.cryptocurrencies);
 
-  const setInputHandle = (e: ChangeEvent<HTMLInputElement>) => {
+  const setInputHandle = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const newInput = e.target.value;
     dispatch(
       cryptocurrenciesActions.searchingStatus({
@@ -31,7 +31,7 @@ const CryptocurrenciesList = React.memo(() => {
         searchingText: newInput,
       })
     );
-  };
+  }, []);
 
   const { page } = useParams<string>();
   const navigate = useNavigate();
